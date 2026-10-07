@@ -19,9 +19,9 @@ client = Anthropic()
 
 # Calculate total token cost
 # Round to 6 digits
-def total_cost(input: int, output: int) -> float:
-    input_cost = (input / 1_000_000) * COST_INPUT
-    output_cost = (output / 1_000_000) * COST_OUTPUT
+def total_cost(in_tokens: int, out_tokens: int) -> float:
+    input_cost = (in_tokens / 1_000_000) * COST_INPUT
+    output_cost = (out_tokens / 1_000_000) * COST_OUTPUT
     return round(input_cost + output_cost, 6)
 
 
@@ -29,8 +29,15 @@ def total_cost(input: int, output: int) -> float:
 response = client.messages.create(
     model=MODEL,
     max_tokens=200,
+    system=(
+        "You are the receptionist at a pathology lab. "
+        "Reply in one short, friendly sentence."
+    ),
     messages=[
-        {"role": "user", "content": "Say hi in 5 words"},
+        {
+            "role": "user",
+            "content": "When will my CBC report be ready?",
+        },
     ],
 )
 
@@ -45,6 +52,6 @@ print(
     "\n"
     f"tokens in={usage.input_tokens} "
     f"out={usage.output_tokens} "
-    f"cost=${total_cost(usage.input_tokens, usage.output_tokens):.6f}",
+    f"cost=${total_cost(usage.input_tokens, usage.output_tokens):.6f}"
     "\n"
 )
