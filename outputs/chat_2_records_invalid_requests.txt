@@ -1,0 +1,35 @@
+
+ --- Welcome --- 
+
+> 9999. Is my report ready?
+Thinking: 
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=165 out=16 cost=$0.000024 
+
+> My PID is 9999
+Thinking: PID 9999 isn't in the data, so I should just give a brief, friendly reply apologizing that I can't help with that.
+
+
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=190 out=117 cost=$0.000077 
+
+> What date is today?
+Thinking: 
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=213 out=16 cost=$0.000029 
+
+> Who are you?
+Thinking: 
+AI: I'm the receptionist at the pathology lab, here to help with questions about your test status using your PID.
+Usage: tokens in=236 out=33 cost=$0.000040 
+
+> What is 2+5?
+Thinking: 
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=278 out=16 cost=$0.000036 
+
+
+ --- Session limit (5) exhausted --- 
+
+
+ --- Thank you --- 

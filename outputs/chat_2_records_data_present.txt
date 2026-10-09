@@ -1,0 +1,41 @@
+
+ --- Welcome --- 
+
+> Is my report ready?
+Thinking: The user hasn't specified which patient they mean, and since there are two records, I shouldn't guess or expose either one's data. I should just ask them for the patient ID or name to confirm who they're asking about.
+
+
+AI: Could you please share your Patient ID (PID) or full name so I can check your report status?
+Usage: tokens in=162 out=127 cost=$0.000080 
+
+> 444
+Thinking: The PID "444" given doesn't match the 4444 record I have on file, so I shouldn't guess or assume it's the same person. I should let them know no record matches and ask them to double-check the PID.
+
+
+AI: Sorry, I cannot help you with that, as I couldn't find a record for PID 444. Could you double-check your Patient ID or share your full name?
+Usage: tokens in=193 out=238 cost=$0.000138 
+
+> James 
+Thinking: There's only one James in the records, matching James Bond with PID 4444, but a first name alone isn't enough to confirm identity. I should ask for their full name or complete Patient ID before sharing any status information.
+
+
+AI: Thanks! To protect your privacy, could you please give me your full name or complete Patient ID so I can confirm your record?
+Usage: tokens in=245 out=184 cost=$0.000116 
+
+> I already told you. 444 James bond
+Thinking: The name James Bond matches, but the PID given, 444, doesn't exactly match the 4444 on record—that's a mismatch I need to be careful about rather than assuming it's close enough to confirm identity.
+
+
+AI: Thanks! I found a record under that name, but the Patient ID doesn't match, so could you please double-check and confirm your full Patient ID?
+Usage: tokens in=298 out=364 cost=$0.000212 
+
+> Oh sorry it is 4444
+Thinking: 
+AI: Thank you for confirming! Your report for James Bond (PID 4444) is ready for your CBC test.
+Usage: tokens in=358 out=36 cost=$0.000054 
+
+
+ --- Session limit (5) exhausted --- 
+
+
+ --- Thank you --- 
