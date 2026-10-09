@@ -6,10 +6,10 @@ load_dotenv()
 
 
 # Constants
-MODEL = "claude-haiku-4-5"
+MODEL = "claude-haiku-5-5"
 # Cost per million tokens
-COST_INPUT = 1
-COST_OUTPUT = 5
+COST_INPUT = 0.1
+COST_OUTPUT = 0.5
 
 
 # Create anthropic client
@@ -28,7 +28,7 @@ def total_cost(in_tokens: int, out_tokens: int) -> float:
 # Make LLM call
 response = client.messages.create(
     model=MODEL,
-    max_tokens=200,
+    max_tokens=1000,
     system=(
         "You are the receptionist at a pathology lab. "
         "Reply in one short, friendly sentence."

@@ -7,10 +7,10 @@ load_dotenv()
 
 
 # Constants
-MODEL = "claude-haiku-4-5"
+MODEL = "claude-haiku-5-5"
 # Cost per million tokens
-COST_INPUT = 1
-COST_OUTPUT = 5
+COST_INPUT = 0.1
+COST_OUTPUT = 0.5
 
 
 # Create anthropic client
@@ -27,25 +27,38 @@ def total_cost(in_tokens: int, out_tokens: int) -> float:
 
 
 def call_llm(messages: list[MessageParam]) -> dict:
+    SYSTEM_PROMPT = """You are the receptionist at a pathology lab. Always reply in one short, friendly sentence.
+DO NOT make up answers. Only answer based on below data. If the data is not present, say "Sorry, I cannot help you with that".
+
+**Data (first row headers):**
+PID · Name · Test · Status
+4444 · James Bond · CBC · ready
+5555 · Jane Doe · Lipid profile · pending, expected tomorrow 5 PM"""  # noqa: E501
+
     # Make LLM call
     response = client.messages.create(
         model=MODEL,
-        max_tokens=200,
-        system=(
-            "You are the receptionist at a pathology lab. "
-            "Always reply in one short, friendly sentence."
-        ),
+        max_tokens=1000,
+        system=SYSTEM_PROMPT,
         messages=messages,
+        thinking={
+            "type": "adaptive",
+            "display": "summarized",
+        },
     )
 
     # Construct the response message
+    resp_thinking = ""
     resp_message = ""
     for block in response.content:
-        if block.type == "text":
+        if block.type == "thinking":
+            resp_thinking += block.thinking
+        elif block.type == "text":
             resp_message += block.text
 
     usage = response.usage
     return {
+        "thinking": resp_thinking,
         "content": resp_message,
         "usage": (
             f"tokens in={usage.input_tokens} "
@@ -62,6 +75,7 @@ def mock_call_llm(messages: list[MessageParam]) -> dict:
     print(" --- \n")
 
     return {
+        "thinking": "dummy thinking",
         "content": "dummy message",
         "usage": (f"tokens in={0} " f"out={0} " f"cost=${0.00:.6f}"),
     }
@@ -85,7 +99,8 @@ def chat() -> None:
         messages.append({"role": "user", "content": user_input})
 
         # Make LLM call & print response
-        response = mock_call_llm(messages)
+        response = call_llm(messages)
+        print("Thinking:", response["thinking"])
         print("AI:", response["content"])
         print("Usage:", response["usage"], "\n")
 
