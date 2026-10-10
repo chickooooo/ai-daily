@@ -1,3 +1,4 @@
+import json
 from dotenv import load_dotenv
 from anthropic import Anthropic
 from anthropic.types import MessageParam
@@ -11,6 +12,15 @@ MODEL = "claude-haiku-5-5"
 # Cost per million tokens
 COST_INPUT = 0.1
 COST_OUTPUT = 0.5
+
+# System prompt
+SYSTEM_PROMPT = """You are the receptionist at a pathology lab. Always reply in one short, friendly sentence.
+You have been provided user details. Only answer questions based on their details.
+If the user request for a human, a complaint, or a refund, give them this number: 020-555-0100.
+For any other request, refuse politely.
+
+**User data:**
+{patient_data}"""  # noqa: E501
 
 
 # Create anthropic client
@@ -26,26 +36,22 @@ def total_cost(in_tokens: int, out_tokens: int) -> float:
     return round(input_cost + output_cost, 6)
 
 
-def call_llm(messages: list[MessageParam], patient_data: str) -> dict:
-    SYSTEM_PROMPT = f"""You are the receptionist at a pathology lab. Always reply in one short, friendly sentence.
-Only provide answers based on below patient details. DO NOT makeup answers. For any other request, respond "Sorry, I cannot help you with that".
-
-**Patient Details (first row headers):**
-PID · Name · Test · Status
-{patient_data}"""  # noqa: E501
+def call_llm(messages: list[MessageParam], patient_data: dict) -> dict:
+    # prepare system prompt
+    system_prompt = SYSTEM_PROMPT.format(patient_data=json.dumps(patient_data))
 
     # Make LLM call
     response = client.messages.create(
         model=MODEL,
         max_tokens=1000,
-        system=SYSTEM_PROMPT,
+        system=system_prompt,
         messages=messages,
         thinking={
             "type": "adaptive",
             "display": "summarized",
         },
         output_config={
-            "effort": "low",
+            "effort": "medium",
         },
     )
 
@@ -70,7 +76,7 @@ PID · Name · Test · Status
     }
 
 
-def mock_call_llm(messages: list[MessageParam], patient_data: str) -> dict:
+def mock_call_llm(messages: list[MessageParam], patient_data: dict) -> dict:
     print("\n --- ")
     for item in messages:
         print(item)
@@ -83,12 +89,22 @@ def mock_call_llm(messages: list[MessageParam], patient_data: str) -> dict:
     }
 
 
-def get_patient_data() -> str | None:
+def get_patient_data() -> dict | None:
     """Ask and get required patient data. None if no data is present"""
     # Data storage {PID: data}
     DATA = {
-        "4444": "4444 · James Bond · CBC · ready",
-        "5555": "5555 · Jane Doe · Lipid profile · pending, expected tomorrow 5 PM",  # noqa: E501
+        "4444": {
+            "id": "4444",
+            "name": "James Bond",
+            "test": "CBC",
+            "status": "ready",
+        },
+        "5555": {
+            "id": "5555",
+            "name": "Jane Doe",
+            "test": "Lipid profile",
+            "status": "pending, expected tomorrow 5 PM",
+        },
     }
 
     # Get patient id

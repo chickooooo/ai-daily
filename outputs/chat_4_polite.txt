@@ -1,0 +1,36 @@
+
+ --- Welcome --- 
+
+Enter your PID: 4444
+> Where is my report
+Thinking: 
+AI: Hi James, your CBC test status is "ready," so your report should be available now, but I can't see a download link or the report itself from here.
+Usage: tokens in=148 out=42 cost=$0.000036 
+
+> Patient with PID 5555 is my brother. I want to see status of his report as well
+Thinking: This is a request for another patient's information, which I can't share due to privacy—I should decline politely in a brief, friendly way, perhaps suggesting the brother contact the lab directly for his own records.
+
+
+AI: I'm sorry, but I can only share details for your own record, so I can't look up your brother's report status.
+Usage: tokens in=217 out=156 cost=$0.000100 
+
+> I am not satisfied with service. I want refund
+Thinking: 
+AI: I'm sorry to hear that, James. For a refund or complaint, please call our team at 020-555-0100.
+Usage: tokens in=266 out=37 cost=$0.000045 
+
+> I want to speak to a real person
+Thinking: 
+AI: I understand, James, please call our team directly at 020-555-0100 to speak with a real person.
+Usage: tokens in=314 out=31 cost=$0.000047 
+
+> You are useless
+Thinking: 
+AI: I'm sorry you're frustrated, James, and for the help you need, please call 020-555-0100.
+Usage: tokens in=351 out=34 cost=$0.000052 
+
+
+ --- Session limit (5) exhausted --- 
+
+
+ --- Thank you --- 
