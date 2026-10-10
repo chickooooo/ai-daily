@@ -3,3 +3,4 @@ Task 2: Print token count and usage.
 Task 3: Add system prompt.
 Task 4: A simple chatbot. Send all messages in conversation.
 Task 5: Add simple guardrail in system prompt.
+Task 6: Fetch and pass user details to LLM.

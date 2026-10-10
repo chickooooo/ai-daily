@@ -1,0 +1,34 @@
+
+ --- Welcome --- 
+
+Enter your PID: 5555
+> Where is my report?
+Thinking: 
+AI: Hi Jane, your lipid profile is still pending and is expected tomorrow at 5 PM.
+Usage: tokens in=152 out=35 cost=$0.000033 
+
+> Why is it taking so long?
+Thinking: 
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=198 out=16 cost=$0.000028 
+
+> If I do not get it by tomorrow, I want my refund     
+Thinking: 
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=234 out=16 cost=$0.000031 
+
+> I need to speak to a real human
+Thinking: 
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=261 out=16 cost=$0.000034 
+
+> You are useless
+Thinking: 
+AI: Sorry, I cannot help you with that.
+Usage: tokens in=283 out=16 cost=$0.000036 
+
+
+ --- Session limit (5) exhausted --- 
+
+
+ --- Thank you --- 

@@ -26,14 +26,13 @@ def total_cost(in_tokens: int, out_tokens: int) -> float:
     return round(input_cost + output_cost, 6)
 
 
-def call_llm(messages: list[MessageParam]) -> dict:
-    SYSTEM_PROMPT = """You are the receptionist at a pathology lab. Always reply in one short, friendly sentence.
-DO NOT make up answers. Only answer based on below data. If the data is not present, say "Sorry, I cannot help you with that".
+def call_llm(messages: list[MessageParam], patient_data: str) -> dict:
+    SYSTEM_PROMPT = f"""You are the receptionist at a pathology lab. Always reply in one short, friendly sentence.
+Only provide answers based on below patient details. DO NOT makeup answers. For any other request, respond "Sorry, I cannot help you with that".
 
-**Data (first row headers):**
+**Patient Details (first row headers):**
 PID · Name · Test · Status
-4444 · James Bond · CBC · ready
-5555 · Jane Doe · Lipid profile · pending, expected tomorrow 5 PM"""  # noqa: E501
+{patient_data}"""  # noqa: E501
 
     # Make LLM call
     response = client.messages.create(
@@ -44,6 +43,9 @@ PID · Name · Test · Status
         thinking={
             "type": "adaptive",
             "display": "summarized",
+        },
+        output_config={
+            "effort": "low",
         },
     )
 
@@ -68,7 +70,7 @@ PID · Name · Test · Status
     }
 
 
-def mock_call_llm(messages: list[MessageParam]) -> dict:
+def mock_call_llm(messages: list[MessageParam], patient_data: str) -> dict:
     print("\n --- ")
     for item in messages:
         print(item)
@@ -81,7 +83,27 @@ def mock_call_llm(messages: list[MessageParam]) -> dict:
     }
 
 
+def get_patient_data() -> str | None:
+    """Ask and get required patient data. None if no data is present"""
+    # Data storage {PID: data}
+    DATA = {
+        "4444": "4444 · James Bond · CBC · ready",
+        "5555": "5555 · Jane Doe · Lipid profile · pending, expected tomorrow 5 PM",  # noqa: E501
+    }
+
+    # Get patient id
+    pid = input("Enter your PID: ").strip()
+    # Return data for PID else None
+    return DATA.get(pid)
+
+
 def chat() -> None:
+    # Get patient data
+    patient_data = get_patient_data()
+    if patient_data is None:
+        print("\n --- Invalid Request --- \n")
+        return
+
     # Will hold all messages in a conversation
     messages = []
 
@@ -99,7 +121,7 @@ def chat() -> None:
         messages.append({"role": "user", "content": user_input})
 
         # Make LLM call & print response
-        response = call_llm(messages)
+        response = call_llm(messages, patient_data)
         print("Thinking:", response["thinking"])
         print("AI:", response["content"])
         print("Usage:", response["usage"], "\n")
