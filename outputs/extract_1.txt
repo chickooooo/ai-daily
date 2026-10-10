@@ -1,0 +1,31 @@
+
+Input: Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17)
+
+Output: patient_name='Mr. Rahul Sharma' test_name='Haemoglobin' value=13.8 unit='g/dL'
+Value + 1: 14.8
+
+tokens in=365 out=53 cost=$0.000063
+
+
+- - - - -
+
+
+Input: Rahul Sharma | Haemoglobin | CBC
+
+Output: patient_name='Rahul Sharma' test_name='Haemoglobin' value=579.0 unit='g/dL'
+Value + 1: 580.0
+
+tokens in=344 out=600 cost=$0.000334
+
+
+- - - - -
+
+
+Input: Rahul Sharma | Haemoglobin | CBC 
+
+Thinking: This input gives no numeric value or unit for the haemoglobin test, but the schema demands a number and unit string—I can't fabricate data just to satisfy the schema, so I need to figure out how to handle this gap honestly while still producing valid JSON.
+
+Output: patient_name='Rahul Sharma' test_name='Haemoglobin' value=0.0 unit=''
+Value + 1: 1.0
+
+tokens in=344 out=495 cost=$0.000282
