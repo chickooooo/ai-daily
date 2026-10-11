@@ -6,3 +6,4 @@ Task 5: Add simple guardrail in system prompt.
 Task 6: Fetch and pass user details to LLM.
 Task 7: Enhance system prompt to handle each scenario differently.
 Task 8: Structured output.
+Task 9: Allow missing values in structured output.

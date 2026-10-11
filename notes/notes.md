@@ -52,3 +52,5 @@
 <br>
 
 - Output tokens cost 5x more than input tokens.
+- When extracting structured output, allow the model to mark missing data.
+- If all fields are marked required, the model will invent data that is not present.

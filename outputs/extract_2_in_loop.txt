@@ -1,0 +1,60 @@
+ - - - ATTEMPT 1 - - - 
+Input: Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17) 
+
+Thinking: 
+Output: patient_name='Mr. Rahul Sharma' test_name='Haemoglobin' value=13.8 unit='g/dL'
+Value + 1: 14.8
+
+tokens in=459 out=56 cost=$0.000074
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17) 
+
+Thinking: 
+Output: patient_name='Mr. Rahul Sharma' test_name='Haemoglobin' value=13.8 unit='g/dL'
+Value + 1: 14.8
+
+tokens in=459 out=56 cost=$0.000074
+
+
+
+
+ - - - ATTEMPT 1 - - - 
+Input: Rahul Sharma | Haemoglobin 
+
+Thinking: 
+Output: patient_name='Rahul Sharma' test_name='Haemoglobin' value=None unit=None
+
+tokens in=434 out=44 cost=$0.000065
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Rahul Sharma | Haemoglobin 
+
+Thinking: 
+Output: patient_name='Rahul Sharma' test_name='Haemoglobin' value=None unit=None
+
+tokens in=434 out=44 cost=$0.000065
+
+
+
+
+ - - - ATTEMPT 1 - - - 
+Input: Iskrov the great II | Lipid profile 4455 
+
+Thinking: 
+Output: patient_name='Iskrov the great II' test_name='Lipid profile' value=4455.0 unit=None
+Value + 1: 4456.0
+
+tokens in=436 out=45 cost=$0.000066
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Iskrov the great II | Lipid profile 4455 
+
+Thinking: 
+Output: patient_name='Iskrov the great II' test_name='Lipid profile' value=4455.0 unit=None
+Value + 1: 4456.0
+
+tokens in=436 out=45 cost=$0.000066
