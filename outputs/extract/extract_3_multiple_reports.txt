@@ -1,0 +1,89 @@
+ - - - ATTEMPT 1 - - - 
+Input: Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17) 
+
+Thinking: 
+Output: patient_name='Mr. Rahul Sharma' results=[LabResult(test_name='Haemoglobin', value=13.8, unit='g/dL')]
+
+tokens in=592 out=63 cost=$0.000091
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17) 
+
+Thinking: 
+Output: patient_name='Mr. Rahul Sharma' results=[LabResult(test_name='Haemoglobin', value=13.8, unit='g/dL')]
+
+tokens in=592 out=60 cost=$0.000089
+
+
+
+
+ - - - ATTEMPT 1 - - - 
+Input: Rahul Sharma | Haemoglobin 
+
+Thinking: 
+Output: patient_name='Rahul Sharma' results=[LabResult(test_name='Haemoglobin', value=None, unit=None)]
+
+tokens in=567 out=51 cost=$0.000082
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Rahul Sharma | Haemoglobin 
+
+Thinking: 
+Output: patient_name='Rahul Sharma' results=[LabResult(test_name='Haemoglobin', value=None, unit=None)]
+
+tokens in=567 out=51 cost=$0.000082
+
+
+
+
+ - - - ATTEMPT 1 - - - 
+Input: Iskrov the great II | Lipid profile 4455 
+
+Thinking: Parsing "Iskrov the great II | Lipid profile 4455" as patient name "Iskrov the great II" with a lab result for Lipid profile valued at 4455, no unit given. The number is a bit ambiguous but I'll extract it as-is and output the single-line JSON.
+
+
+Output: patient_name='Iskrov the great II' results=[LabResult(test_name='Lipid profile', value=4455.0, unit=None)]
+
+tokens in=569 out=153 cost=$0.000133
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Iskrov the great II | Lipid profile 4455 
+
+Thinking: 
+Output: patient_name='Iskrov the great II' results=[LabResult(test_name='Lipid profile', value=4455.0, unit=None)]
+
+tokens in=569 out=52 cost=$0.000083
+
+
+
+
+ - - - ATTEMPT 1 - - - 
+Input: Patient: Mrs. Anita Desai    Sample No: 4455
+LIPID PROFILE
+Total Cholesterol   212  mg/dL   (<200)
+HDL Cholesterol      48  mg/dL   (>40)
+LDL Cholesterol     138  mg/dL   (<100)
+Triglycerides       130  mg/dL   (<150) 
+
+Thinking: 
+Output: patient_name='Mrs. Anita Desai' results=[LabResult(test_name='Total Cholesterol', value=212.0, unit='mg/dL'), LabResult(test_name='HDL Cholesterol', value=48.0, unit='mg/dL'), LabResult(test_name='LDL Cholesterol', value=138.0, unit='mg/dL'), LabResult(test_name='Triglycerides', value=130.0, unit='mg/dL')]
+
+tokens in=673 out=167 cost=$0.000151
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Patient: Mrs. Anita Desai    Sample No: 4455
+LIPID PROFILE
+Total Cholesterol   212  mg/dL   (<200)
+HDL Cholesterol      48  mg/dL   (>40)
+LDL Cholesterol     138  mg/dL   (<100)
+Triglycerides       130  mg/dL   (<150) 
+
+Thinking: 
+Output: patient_name='Mrs. Anita Desai' results=[LabResult(test_name='Total Cholesterol', value=212.0, unit='mg/dL'), LabResult(test_name='HDL Cholesterol', value=48.0, unit='mg/dL'), LabResult(test_name='LDL Cholesterol', value=138.0, unit='mg/dL'), LabResult(test_name='Triglycerides', value=130.0, unit='mg/dL')]
+
+tokens in=673 out=167 cost=$0.000151
+

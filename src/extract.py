@@ -19,8 +19,15 @@ SYSTEM_PROMPT = "Extract given lab result. If `value` or `unit` is not present, 
 DATA = "Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17)"
 DATA_MISSING = "Rahul Sharma | Haemoglobin"
 DATA_MISSING_UNIT = "Iskrov the great II | Lipid profile 4455"
+DATA_MULTI_REPORTS = """Patient: Mrs. Anita Desai    Sample No: 4455
+LIPID PROFILE
+Total Cholesterol   212  mg/dL   (<200)
+HDL Cholesterol      48  mg/dL   (>40)
+LDL Cholesterol     138  mg/dL   (<100)
+Triglycerides       130  mg/dL   (<150)"""
 
-ALL_DATA = [DATA, DATA_MISSING, DATA_MISSING_UNIT]
+ALL_DATA = [DATA, DATA_MISSING, DATA_MISSING_UNIT, DATA_MULTI_REPORTS]
+
 
 # Create anthropic client
 # Key is taken from .env 'ANTHROPIC_API_KEY'
@@ -29,10 +36,15 @@ client = Anthropic()
 
 # Structured output definition
 class LabResult(BaseModel):
-    patient_name: str
     test_name: str
     value: float | None
     unit: str | None
+
+
+# Lab report of a patient
+class LabReport(BaseModel):
+    patient_name: str
+    results: list[LabResult]
 
 
 # Calculate total token cost
@@ -55,7 +67,7 @@ def extract(raw_data: str):
             "type": "adaptive",
             "display": "summarized",
         },
-        output_format=LabResult,
+        output_format=LabReport,
     )
 
     # Thinking
@@ -68,11 +80,6 @@ def extract(raw_data: str):
     print("Input:", raw_data, "\n")
     print("Thinking:", resp_thinking)
     print("Output:", response.parsed_output)
-    if (
-        response.parsed_output is not None
-        and response.parsed_output.value is not None  # noqa: E501
-    ):  # noqa: E501
-        print("Value + 1:", response.parsed_output.value + 1)
 
     # Print token usage
     usage = response.usage
