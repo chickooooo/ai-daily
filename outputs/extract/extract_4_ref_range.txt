@@ -1,0 +1,88 @@
+ - - - ATTEMPT 1 - - - 
+Input: Patient: Mrs. Anita Desai    Sample No: 4455
+LIPID PROFILE
+Total Cholesterol   212  mg/dL   (<200)
+HDL Cholesterol      48  mg/dL   (>40)
+LDL Cholesterol     138  mg/dL   (<100)
+Triglycerides       130  mg/dL   (<150) 
+
+Thinking: I'm organizing the lipid panel values into structured entries: total cholesterol at 212 (high ref 200), HDL at 48 (low ref 40), LDL at 138 (high ref 100), and triglycerides at 130 (high ref 150), each with their mg/dL units and reference bounds set up for JSON output.
+
+
+Output:
+         Patient name: Mrs. Anita Desai
+                 Test name: Total Cholesterol
+                 Value: 212.0
+                 Unit: mg/dL
+                 Ref low: None
+                 Ref high: 200.0
+                 Flag: H
+                 
+                 Test name: HDL Cholesterol
+                 Value: 48.0
+                 Unit: mg/dL
+                 Ref low: 40.0
+                 Ref high: None
+                 Flag: 
+                 
+                 Test name: LDL Cholesterol
+                 Value: 138.0
+                 Unit: mg/dL
+                 Ref low: None
+                 Ref high: 100.0
+                 Flag: H
+                 
+                 Test name: Triglycerides
+                 Value: 130.0
+                 Unit: mg/dL
+                 Ref low: None
+                 Ref high: 150.0
+                 Flag: 
+
+
+tokens in=842 out=356 cost=$0.000262
+
+
+ - - - ATTEMPT 2 - - - 
+Input: Patient: Mrs. Anita Desai    Sample No: 4455
+LIPID PROFILE
+Total Cholesterol   212  mg/dL   (<200)
+HDL Cholesterol      48  mg/dL   (>40)
+LDL Cholesterol     138  mg/dL   (<100)
+Triglycerides       130  mg/dL   (<150) 
+
+Thinking: I need to format this as a single-line JSON: for the "<200" reference I'll set ref_low to null and ref_high to 200, and for ">40" I'll set ref_low to 40 with ref_high null. All values use mg/dL as the unit.
+
+
+Output:
+         Patient name: Mrs. Anita Desai
+                 Test name: Total Cholesterol
+                 Value: 212.0
+                 Unit: mg/dL
+                 Ref low: None
+                 Ref high: 200.0
+                 Flag: H
+                 
+                 Test name: HDL Cholesterol
+                 Value: 48.0
+                 Unit: mg/dL
+                 Ref low: 40.0
+                 Ref high: None
+                 Flag: 
+                 
+                 Test name: LDL Cholesterol
+                 Value: 138.0
+                 Unit: mg/dL
+                 Ref low: None
+                 Ref high: 100.0
+                 Flag: H
+                 
+                 Test name: Triglycerides
+                 Value: 130.0
+                 Unit: mg/dL
+                 Ref low: None
+                 Ref high: 150.0
+                 Flag: 
+
+
+tokens in=842 out=290 cost=$0.000229

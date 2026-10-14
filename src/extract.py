@@ -13,7 +13,7 @@ COST_INPUT = 0.1
 COST_OUTPUT = 0.5
 
 # System Prompt
-SYSTEM_PROMPT = "Extract given lab result. If `value` or `unit` is not present, mark them as None."  # noqa: E501
+SYSTEM_PROMPT = "Extract given lab result. If `value` or `unit` is not present, mark them as None. Also extract the reference range `ref_low` and `ref_high` if present."  # noqa: E501
 
 # Input data
 DATA = "Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17)"
@@ -26,7 +26,7 @@ HDL Cholesterol      48  mg/dL   (>40)
 LDL Cholesterol     138  mg/dL   (<100)
 Triglycerides       130  mg/dL   (<150)"""
 
-ALL_DATA = [DATA, DATA_MISSING, DATA_MISSING_UNIT, DATA_MULTI_REPORTS]
+ALL_DATA = [DATA_MULTI_REPORTS]
 
 
 # Create anthropic client
@@ -39,6 +39,8 @@ class LabResult(BaseModel):
     test_name: str
     value: float | None
     unit: str | None
+    ref_low: float | None
+    ref_high: float | None
 
 
 # Lab report of a patient
@@ -53,6 +55,30 @@ def total_cost(in_tokens: int, out_tokens: int) -> float:
     input_cost = (in_tokens / 1_000_000) * COST_INPUT
     output_cost = (out_tokens / 1_000_000) * COST_OUTPUT
     return round(input_cost + output_cost, 6)
+
+
+# Flag a result
+def flag_result(result: LabResult) -> str:
+    # If value not present
+    if not result.value:
+        return ""
+    # if invalid ref range
+    if (
+        result.ref_low is not None
+        and result.ref_high is not None
+        and result.ref_high < result.ref_low
+    ):
+        return ""
+
+    # If value is less that low ref
+    if result.ref_low is not None and result.value < result.ref_low:
+        return "L"
+    # If value is more that high ref
+    if result.ref_high is not None and result.value > result.ref_high:
+        return "H"
+
+    # value in range or both ref absent
+    return ""
 
 
 # Extract structured output from raw data
@@ -76,10 +102,23 @@ def extract(raw_data: str):
         if block.type == "thinking":
             resp_thinking += block.thinking
 
-    # Print the parsed output
+    # Print the input and thinking
     print("Input:", raw_data, "\n")
     print("Thinking:", resp_thinking)
-    print("Output:", response.parsed_output)
+
+    # Print the output.
+    print("Output:")
+    if response.parsed_output:
+        print("\t", "Patient name:", response.parsed_output.patient_name)
+        # Each result on new line
+        for result in response.parsed_output.results:
+            print("\t\t", "Test name:", result.test_name)
+            print("\t\t", "Value:", result.value)
+            print("\t\t", "Unit:", result.unit)
+            print("\t\t", "Ref low:", result.ref_low)
+            print("\t\t", "Ref high:", result.ref_high)
+            print("\t\t", "Flag:", flag_result(result))
+            print("")
 
     # Print token usage
     usage = response.usage
