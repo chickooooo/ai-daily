@@ -1,0 +1,12 @@
+❯ pytest src/eval_extract.py -vv
+============================================================================ test session starts ============================================================================
+platform darwin -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /Users/creliohealth/Desktop/projects/ai_daily/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/creliohealth/Desktop/projects/ai_daily
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collected 1 item                                                                                                                                                            
+
+src/eval_extract.py::test_case_1 PASSED                                                                                                                               [100%]
+
+============================================================================= 1 passed in 5.16s =============================================================================

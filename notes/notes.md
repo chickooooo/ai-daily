@@ -54,3 +54,10 @@
 - Output tokens cost 5x more than input tokens.
 - When extracting structured output, allow the model to mark missing data.
 - If all fields are marked required, the model will invent data that is not present.
+
+<br>
+
+- Test cases vs Evals:
+    - In test cases, one wrong field fails everything, and we can't tell "1 field off" from "completely broken".
+    - Classic tests demand exactly 100%.
+    - LLM output is rarely perfect, so with evals we track a score, such as 19/20, and watch whether a change raises or lowers it.

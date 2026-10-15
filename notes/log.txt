@@ -9,3 +9,4 @@ Task 8: Structured output.
 Task 9: Allow missing values in structured output.
 Task 10: Use sub-Pydantic model to extract multiple reports.
 Task 11: Use Python to perform deterministic operations on extracted data.
+Task 12: Add eval for extraction using Pytest.

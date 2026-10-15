@@ -1,0 +1,130 @@
+❯ pytest src/eval_extract.py -vv 
+============================================================================ test session starts ============================================================================
+platform darwin -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /Users/creliohealth/Desktop/projects/ai_daily/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/creliohealth/Desktop/projects/ai_daily
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collected 1 item                                                                                                                                                            
+
+src/eval_extract.py::test_case_1 FAILED                                                                                                                               [100%]
+
+================================================================================= FAILURES ==================================================================================
+________________________________________________________________________________ test_case_1 ________________________________________________________________________________
+
+    def test_case_1():
+>       assert extract(TEST_CASE_1) == OUTPUT_TEST_CASE_1
+E       AssertionError: assert {'patient_name': 'Mrs. Anita Desai', 'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit': 'mg/dL', 'ref_low': None, 'ref_high': 200.0, 'flag': 'H'}, {'test_name': 'HDL Cholesterol', 'value': 48.0, 'unit': 'mg/dL', 'ref_low': 40.66, 'ref_high': None, 'flag': ''}, {'test_name': 'LDL Cholesterol', 'value': 138.0, 'unit': 'mg/dL', 'ref_low': 50.0, 'ref_high': 100.0, 'flag': 'H'}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, 'ref_high': 150.0, 'flag': 'L'}]} == {'patient_name': 'Mrs. Anita Desai', 'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit': 'mg/dL', 'ref_low': None, 'ref_high': 200.0, 'flag': 'H'}, {'test_name': 'HDL Cholesterol', 'value': 48.0, 'unit': 'mg/dL', 'ref_low': 40.0, 'ref_high': None, 'flag': ''}, {'test_name': 'LDL Cholesterol', 'value': 138.0, 'unit': 'mg/dL', 'ref_low': 50.0, 'ref_high': 100.0, 'flag': 'H'}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, 'ref_high': 150.0, 'flag': 'L'}]}
+E         
+E         Common items:
+E         {'patient_name': 'Mrs. Anita Desai'}
+E         Differing items:
+E         {'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit': 'mg/dL', 'ref_low': None, ...}, {'test_name': ...mg/dL', 'ref_low': 50.0, ...}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, ...}]} != {'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit': 'mg/dL', 'ref_low':None, ...}, {'test_name': ...mg/dL', 'ref_low': 50.0, ...}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, ...}]}
+E         
+E         Full diff:
+E           {
+E               'patient_name': 'Mrs. Anita Desai',
+E               'results': [
+E                   {
+E                       'test_name': 'Total Cholesterol',
+E                       'value': 212.0,
+E                       'unit': 'mg/dL',
+E                       'ref_low': None,
+E                       'ref_high': 200.0,
+E                       'flag': 'H',
+E                   },
+E                   {
+E                       'test_name': 'HDL Cholesterol',
+E                       'value': 48.0,
+E                       'unit': 'mg/dL',
+E         -             'ref_low': 40.0,
+E         ?                           ^
+E         +             'ref_low': 40.66,
+E         ?                           ^^
+E                       'ref_high': None,
+E                       'flag': '',
+E                   },
+E                   {
+E                       'test_name': 'LDL Cholesterol',
+E                       'value': 138.0,
+E                       'unit': 'mg/dL',
+E                       'ref_low': 50.0,
+E                       'ref_high': 100.0,
+E                       'flag': 'H',
+E                   },
+E                   {
+E                       'test_name': 'Triglycerides',
+E                       'value': 130.0,
+E                       'unit': 'mg/dL',
+E                       'ref_low': 140.0,
+E                       'ref_high': 150.0,
+E                       'flag': 'L',
+E                   },
+E               ],
+E           }
+
+src/eval_extract.py:51: AssertionError
+--------------------------------------------------------------------------- Captured stdout call ----------------------------------------------------------------------------
+Input: Patient: Mrs. Anita Desai    Sample No: 4455
+LIPID PROFILE
+Total Cholesterol   212  mg/dL   (<200)
+HDL Cholesterol      48  mg/dL   (>40.66)
+LDL Cholesterol     138  mg/dL   (50<value<100)
+Triglycerides       130  mg/dL   (<150, >140) 
+
+Thinking: I'm pulling out the lipid panel values: total cholesterol at 212 (high, reference under 200), HDL at 48 (normal, above 40.66), and LDL at 138 against a reference range of 50-100. For triglycerides at 130, I'm noticing the reference thresholds seem inconsistent and need to double-check that.
+
+
+
+tokens in=850 out=452 cost=$0.000311
+
+========================================================================== short test summary info ==========================================================================
+FAILED src/eval_extract.py::test_case_1 - AssertionError: assert {'patient_name': 'Mrs. Anita Desai', 'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit':'mg/dL', 'ref_low': None, 'ref_high': 200.0, 'flag': 'H'}, {'test_name': 'HDL Cholesterol', 'value': 48.0, 'unit': 'mg/dL', 'ref_low': 40.66, 'ref_high': None, 'flag': ''},{'test_name': 'LDL Cholesterol', 'value': 138.0, 'unit': 'mg/dL', 'ref_low': 50.0, 'ref_high': 100.0, 'flag': 'H'}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, 'ref_high': 150.0, 'flag': 'L'}]} == {'patient_name': 'Mrs. Anita Desai', 'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit': 'mg/dL', 'ref_low': None, 'ref_high': 200.0, 'flag': 'H'}, {'test_name': 'HDL Cholesterol', 'value': 48.0, 'unit': 'mg/dL', 'ref_low': 40.0, 'ref_high': None, 'flag': ''}, {'test_name': 'LDL Cholesterol', 'value': 138.0, 'unit': 'mg/dL', 'ref_low': 50.0, 'ref_high': 100.0, 'flag': 'H'}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, 'ref_high': 150.0, 'flag': 'L'}]}
+  
+  Common items:
+  {'patient_name': 'Mrs. Anita Desai'}
+  Differing items:
+  {'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit': 'mg/dL', 'ref_low': None, ...}, {'test_name': ...mg/dL', 'ref_low': 50.0, ...}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, ...}]} != {'results': [{'test_name': 'Total Cholesterol', 'value': 212.0, 'unit': 'mg/dL', 'ref_low': None, ...}, {'test_name': ...mg/dL', 'ref_low': 50.0, ...}, {'test_name': 'Triglycerides', 'value': 130.0, 'unit': 'mg/dL', 'ref_low': 140.0, ...}]}
+  
+  Full diff:
+    {
+        'patient_name': 'Mrs. Anita Desai',
+        'results': [
+            {
+                'test_name': 'Total Cholesterol',
+                'value': 212.0,
+                'unit': 'mg/dL',
+                'ref_low': None,
+                'ref_high': 200.0,
+                'flag': 'H',
+            },
+            {
+                'test_name': 'HDL Cholesterol',
+                'value': 48.0,
+                'unit': 'mg/dL',
+  -             'ref_low': 40.0,
+  ?                           ^
+  +             'ref_low': 40.66,
+  ?                           ^^
+                'ref_high': None,
+                'flag': '',
+            },
+            {
+                'test_name': 'LDL Cholesterol',
+                'value': 138.0,
+                'unit': 'mg/dL',
+                'ref_low': 50.0,
+                'ref_high': 100.0,
+                'flag': 'H',
+            },
+            {
+                'test_name': 'Triglycerides',
+                'value': 130.0,
+                'unit': 'mg/dL',
+                'ref_low': 140.0,
+                'ref_high': 150.0,
+                'flag': 'L',
+            },
+        ],
+    }
+============================================================================= 1 failed in 5.24s =============================================================================

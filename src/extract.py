@@ -60,7 +60,7 @@ def total_cost(in_tokens: int, out_tokens: int) -> float:
 # Flag a result
 def flag_result(result: LabResult) -> str:
     # If value not present
-    if not result.value:
+    if result.value is None:
         return ""
     # if invalid ref range
     if (
@@ -82,7 +82,7 @@ def flag_result(result: LabResult) -> str:
 
 
 # Extract structured output from raw data
-def extract(raw_data: str):
+def extract(raw_data: str) -> dict:
     # Make LLM call
     response = client.messages.parse(
         model=MODEL,
@@ -106,19 +106,23 @@ def extract(raw_data: str):
     print("Input:", raw_data, "\n")
     print("Thinking:", resp_thinking)
 
-    # Print the output.
-    print("Output:")
+    # Collect the output
+    output = {}
     if response.parsed_output:
-        print("\t", "Patient name:", response.parsed_output.patient_name)
+        output["patient_name"] = response.parsed_output.patient_name
+        output["results"] = []
         # Each result on new line
         for result in response.parsed_output.results:
-            print("\t\t", "Test name:", result.test_name)
-            print("\t\t", "Value:", result.value)
-            print("\t\t", "Unit:", result.unit)
-            print("\t\t", "Ref low:", result.ref_low)
-            print("\t\t", "Ref high:", result.ref_high)
-            print("\t\t", "Flag:", flag_result(result))
-            print("")
+            output["results"].append(
+                {
+                    "test_name": result.test_name,
+                    "value": result.value,
+                    "unit": result.unit,
+                    "ref_low": result.ref_low,
+                    "ref_high": result.ref_high,
+                    "flag": flag_result(result),
+                }
+            )
 
     # Print token usage
     usage = response.usage
@@ -130,11 +134,4 @@ def extract(raw_data: str):
         "\n"
     )
 
-
-# 2 runs per data
-for raw_data in ALL_DATA:
-    for i in range(2):
-        print(f" - - - ATTEMPT {i+1} - - - ")
-        extract(raw_data)
-        print("")
-    print("\n")
+    return output
