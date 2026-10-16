@@ -82,7 +82,7 @@ def flag_result(result: LabResult) -> str:
 
 
 # Extract structured output from raw data
-def extract(raw_data: str) -> dict:
+def extract(raw_data: str) -> dict | None:
     # Make LLM call
     response = client.messages.parse(
         model=MODEL,
@@ -134,4 +134,23 @@ def extract(raw_data: str) -> dict:
         "\n"
     )
 
-    return output
+    if output != {}:
+        return output
+    return None
+
+
+# Mock extraction
+def mock_extract(raw_data: str) -> dict | None:
+    return {
+        "patient_name": "Mr. rahul Sharma",
+        "results": [
+            {
+                "test_name": "haemoglobin",
+                "value": 13.8,
+                "unit": "g/dL",
+                "ref_low": 13.0,
+                "ref_high": 17.0,
+                "flag": "",
+            },
+        ],
+    }

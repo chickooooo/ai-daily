@@ -1,0 +1,42 @@
+
+- - - INPUT: 1  - - - 
+Input: Patient: Mrs. Anita Desai    Sample No: 4455
+LIPID PROFILE
+Total Cholesterol   212  mg/dL   (<200)
+HDL Cholesterol      48  mg/dL   (>40.66)
+LDL Cholesterol     138  mg/dL   (50<value<100)
+Triglycerides       130  mg/dL   (<150, >140) 
+
+Thinking: I'm pulling out the lipid panel values: total cholesterol at 212 mg/dL against a high threshold of 200, HDL at 48 with a low threshold around 40.66, LDL at 138 with a reference range of 50-100, and triglycerides at 130 with a somewhat unclear range notation I need to interpret carefully.
+
+
+
+tokens in=850 out=461 cost=$0.000316
+
+SCORE: 25/25
+- - - END - - - 
+
+
+- - - INPUT: 2  - - - 
+Input: Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17) 
+
+Thinking: 
+
+tokens in=761 out=78 cost=$0.000115
+
+SCORE: 7/7
+- - - END - - - 
+
+
+- - - INPUT: 3  - - - 
+Input: Rahul Sharma | Haemoglobin 
+
+Thinking: 
+
+tokens in=736 out=67 cost=$0.000107
+
+SCORE: 7/7
+- - - END - - - 
+
+
+- - - TOTAL: 39/39 - - -

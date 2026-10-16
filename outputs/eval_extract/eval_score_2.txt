@@ -1,0 +1,30 @@
+
+- - - INPUT: 1  - - - 
+MISMATCH for name (case insensitive): Expected 'Mrs. Anita Desai', got: 'Mr. rahul Sharma'
+MISMATCH for results: 3 result(s) missing
+MISMATCH for results, index 0, key 'test_name': Expected 'Total Cholesterol', got: 'Haemoglobin'
+MISMATCH for results, index 0, key 'value': Expected '212.0', got: '13.8'
+MISMATCH for results, index 0, key 'unit': Expected 'mg/dL', got: 'g/dL'
+MISMATCH for results, index 0, key 'ref_low': Expected 'None', got: '13.0'
+MISMATCH for results, index 0, key 'ref_high': Expected '200.0', got: '17.0'
+MISMATCH for results, index 0, key 'flag': Expected 'H', got: ''
+SCORE: 0/25
+- - - END - - - 
+
+
+- - - INPUT: 2  - - - 
+SCORE: 7/7
+- - - END - - - 
+
+
+- - - INPUT: 3  - - - 
+MISMATCH for name (case insensitive): Expected 'Rahul Sharma', got: 'Mr. rahul Sharma'
+MISMATCH for results, index 0, key 'value': Expected 'None', got: '13.8'
+MISMATCH for results, index 0, key 'unit': Expected 'None', got: 'g/dL'
+MISMATCH for results, index 0, key 'ref_low': Expected 'None', got: '13.0'
+MISMATCH for results, index 0, key 'ref_high': Expected 'None', got: '17.0'
+SCORE: 2/7
+- - - END - - - 
+
+
+- - - TOTAL: 9/39 - - -
