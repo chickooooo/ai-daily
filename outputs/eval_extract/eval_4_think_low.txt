@@ -1,0 +1,23 @@
+
+- - - INPUT: 1  - - - 
+SCORE: 25/25
+- - - END - - - 
+
+
+- - - INPUT: 2  - - - 
+SCORE: 7/7
+- - - END - - - 
+
+
+- - - INPUT: 3  - - - 
+SCORE: 7/7
+- - - END - - - 
+
+
+- - - INPUT: 4  - - - 
+SCORE: 1/1
+- - - END - - - 
+
+
+- - - TOTAL: 40/40 - - -
+- - - COST: {'in': 3071, 'out': 585, 'cost': 0.000599} - - -

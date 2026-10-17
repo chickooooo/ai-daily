@@ -1,85 +1,5 @@
-from extract import mock_extract
-
-TEST_CASE_1 = """Patient: Mrs. Anita Desai    Sample No: 4455
-LIPID PROFILE
-Total Cholesterol   212  mg/dL   (<200)
-HDL Cholesterol      48  mg/dL   (>40.66)
-LDL Cholesterol     138  mg/dL   (50<value<100)
-Triglycerides       130  mg/dL   (<150, >140)"""
-TEST_CASE_2 = "Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17)"
-TEST_CASE_3 = "Rahul Sharma | Haemoglobin"
-
-
-OUTPUT_TEST_CASE_1 = {
-    "patient_name": "Mrs. Anita Desai",
-    "results": [
-        {
-            "test_name": "Total Cholesterol",
-            "value": 212.0,
-            "unit": "mg/dL",
-            "ref_low": None,
-            "ref_high": 200.0,
-            "flag": "H",
-        },
-        {
-            "test_name": "HDL Cholesterol",
-            "value": 48.0,
-            "unit": "mg/dL",
-            "ref_low": 40.66,
-            "ref_high": None,
-            "flag": "",
-        },
-        {
-            "test_name": "LDL Cholesterol",
-            "value": 138.0,
-            "unit": "mg/dL",
-            "ref_low": 50.0,
-            "ref_high": 100.0,
-            "flag": "H",
-        },
-        {
-            "test_name": "Triglycerides",
-            "value": 130.0,
-            "unit": "mg/dL",
-            "ref_low": 140.0,
-            "ref_high": 150.0,
-            "flag": "L",
-        },
-    ],
-}
-OUTPUT_TEST_CASE_2 = {
-    "patient_name": "Mr. Rahul Sharma",
-    "results": [
-        {
-            "test_name": "Haemoglobin",
-            "value": 13.8,
-            "unit": "g/dL",
-            "ref_low": 13.0,
-            "ref_high": 17.0,
-            "flag": "",
-        },
-    ],
-}
-OUTPUT_TEST_CASE_3 = {
-    "patient_name": "Rahul Sharma",
-    "results": [
-        {
-            "test_name": "Haemoglobin",
-            "value": None,
-            "unit": None,
-            "ref_low": None,
-            "ref_high": None,
-            "flag": "",
-        },
-    ],
-}
-
-
-TEST_INPUT_OUTPUT_PAIR = {
-    TEST_CASE_1: OUTPUT_TEST_CASE_1,
-    TEST_CASE_2: OUTPUT_TEST_CASE_2,
-    TEST_CASE_3: OUTPUT_TEST_CASE_3,
-}
+from extract import extract
+from extract_eval_suite import TEST_INPUT_OUTPUT_PAIR
 
 
 def match_and_score(expected: dict, result: dict | None) -> tuple[int, int]:
@@ -149,19 +69,24 @@ def match_and_score(expected: dict, result: dict | None) -> tuple[int, int]:
 def run_all_test_cases():
     all_score = 0
     all_total = 0
+    all_usage = {"in": 0, "out": 0, "cost": 0}
 
     for i, (input, output) in enumerate(TEST_INPUT_OUTPUT_PAIR.items()):
         print("\n- - - INPUT:", i + 1, " - - - ")
 
-        result = mock_extract(input)
+        result, usage = extract(input)
         score, total = match_and_score(output, result)
         all_score += score
         all_total += total
+        all_usage["in"] += usage["in"]
+        all_usage["out"] += usage["out"]
+        all_usage["cost"] += usage["cost"]
 
         print(f"SCORE: {score}/{total}")
         print("- - - END - - - \n")
 
-    print(f"\n- - - TOTAL: {all_score}/{all_total} - - -\n")
+    print(f"\n- - - TOTAL: {all_score}/{all_total} - - -")
+    print(f"- - - COST: {all_usage} - - -\n")
 
 
 if __name__ == "__main__":

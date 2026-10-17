@@ -15,19 +15,6 @@ COST_OUTPUT = 0.5
 # System Prompt
 SYSTEM_PROMPT = "Extract given lab result. If `value` or `unit` is not present, mark them as None. Also extract the reference range `ref_low` and `ref_high` if present."  # noqa: E501
 
-# Input data
-DATA = "Pt: Mr. Rahul Sharma | Haemoglobin 13.8 g/dL (ref 13-17)"
-DATA_MISSING = "Rahul Sharma | Haemoglobin"
-DATA_MISSING_UNIT = "Iskrov the great II | Lipid profile 4455"
-DATA_MULTI_REPORTS = """Patient: Mrs. Anita Desai    Sample No: 4455
-LIPID PROFILE
-Total Cholesterol   212  mg/dL   (<200)
-HDL Cholesterol      48  mg/dL   (>40)
-LDL Cholesterol     138  mg/dL   (<100)
-Triglycerides       130  mg/dL   (<150)"""
-
-ALL_DATA = [DATA_MULTI_REPORTS]
-
 
 # Create anthropic client
 # Key is taken from .env 'ANTHROPIC_API_KEY'
@@ -82,7 +69,7 @@ def flag_result(result: LabResult) -> str:
 
 
 # Extract structured output from raw data
-def extract(raw_data: str) -> dict | None:
+def extract(raw_data: str) -> tuple[dict | None, dict]:
     # Make LLM call
     response = client.messages.parse(
         model=MODEL,
@@ -94,17 +81,8 @@ def extract(raw_data: str) -> dict | None:
             "display": "summarized",
         },
         output_format=LabReport,
+        output_config={"effort": "low"},
     )
-
-    # Thinking
-    resp_thinking = ""
-    for block in response.content:
-        if block.type == "thinking":
-            resp_thinking += block.thinking
-
-    # Print the input and thinking
-    print("Input:", raw_data, "\n")
-    print("Thinking:", resp_thinking)
 
     # Collect the output
     output = {}
@@ -126,22 +104,20 @@ def extract(raw_data: str) -> dict | None:
 
     # Print token usage
     usage = response.usage
-    print(
-        "\n"
-        f"tokens in={usage.input_tokens} "
-        f"out={usage.output_tokens} "
-        f"cost=${total_cost(usage.input_tokens, usage.output_tokens):.6f}"
-        "\n"
-    )
+    usage_dict = {
+        "in": usage.input_tokens,
+        "out": usage.output_tokens,
+        "cost": total_cost(usage.input_tokens, usage.output_tokens),
+    }
 
     if output != {}:
-        return output
-    return None
+        return output, usage_dict
+    return None, usage_dict
 
 
 # Mock extraction
-def mock_extract(raw_data: str) -> dict | None:
-    return {
+def mock_extract(raw_data: str) -> tuple[dict | None, dict]:
+    output = {
         "patient_name": "Mr. rahul Sharma",
         "results": [
             {
@@ -154,3 +130,10 @@ def mock_extract(raw_data: str) -> dict | None:
             },
         ],
     }
+    usage_dict = {
+        "in": 0,
+        "out": 0,
+        "cost": 0.0,
+    }
+
+    return output, usage_dict
