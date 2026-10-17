@@ -24,7 +24,7 @@ client = Anthropic()
 # Structured output definition
 class LabResult(BaseModel):
     test_name: str
-    value: float | None
+    value: str | float | None
     unit: str | None
     ref_low: float | None
     ref_high: float | None
@@ -47,7 +47,7 @@ def total_cost(in_tokens: int, out_tokens: int) -> float:
 # Flag a result
 def flag_result(result: LabResult) -> str:
     # If value not present
-    if result.value is None:
+    if result.value is None or isinstance(result.value, str):
         return ""
     # if invalid ref range
     if (

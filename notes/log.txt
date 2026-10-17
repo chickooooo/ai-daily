@@ -12,3 +12,4 @@ Task 11: Use Python to perform deterministic operations on extracted data.
 Task 12: Add eval for extraction using Pytest.
 Task 13: Make eval return a score instead of pass/fail.
 Task 14: Test eval suite on different configurations.
+Task 15: Update pydantic schema and test with full eval suite.

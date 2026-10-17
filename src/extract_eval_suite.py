@@ -11,6 +11,19 @@ TEST_CASE_3 = "Rahul Sharma | Haemoglobin"
 
 TEST_CASE_4 = "   Putin   "
 
+TEST_CASE_5 = """Patient: Mr. Vikram Rao    Age/Sex: 45/M
+URINE ROUTINE EXAMINATION
+Colour          Pale Yellow
+Protein         Nil
+pH              6.0           (4.6 - 8.0)"""
+
+TEST_CASE_6 = """Patient: Ms. Priya Nair
+COMPLETE BLOOD COUNT
+WBC             11,800    /cumm    (4,000 - 11,000)"""
+
+TEST_CASE_7 = """Patient: Mrs. Sunita Iyer    Age/Sex: 38/F
+Haemoglobin     12.5      g/dL     (M: 13-17, F: 12-15)"""
+
 
 OUTPUT_TEST_CASE_1 = {
     "patient_name": "Mrs. Anita Desai",
@@ -83,10 +96,71 @@ OUTPUT_TEST_CASE_4 = {
     "results": [],
 }
 
+OUTPUT_TEST_CASE_5 = {
+    "patient_name": "Mr. Vikram Rao",
+    "results": [
+        {
+            "test_name": "Colour",
+            "value": "Pale Yellow",
+            "unit": None,
+            "ref_low": None,
+            "ref_high": None,
+            "flag": "",
+        },
+        {
+            "test_name": "Protein",
+            "value": "Nil",
+            "unit": None,
+            "ref_low": None,
+            "ref_high": None,
+            "flag": "",
+        },
+        {
+            "test_name": "pH",
+            "value": 6.0,
+            "unit": None,
+            "ref_low": 4.6,
+            "ref_high": 8.0,
+            "flag": "",
+        },
+    ],
+}
+
+OUTPUT_TEST_CASE_6 = {
+    "patient_name": "Ms. Priya Nair",
+    "results": [
+        {
+            "test_name": "WBC",
+            "value": 11800.0,
+            "unit": "/cumm",
+            "ref_low": 4000.0,
+            "ref_high": 11000.0,
+            "flag": "H",
+        },
+    ],
+}
+
+OUTPUT_TEST_CASE_7 = {
+    "patient_name": "Mrs. Sunita Iyer",
+    "results": [
+        {
+            "test_name": "Haemoglobin",
+            "value": 12.5,
+            "unit": "g/dL",
+            "ref_low": 12.0,
+            "ref_high": 15.0,
+            "flag": "",
+        },
+    ],
+}
+
 
 TEST_INPUT_OUTPUT_PAIR = {
     TEST_CASE_1: OUTPUT_TEST_CASE_1,
     TEST_CASE_2: OUTPUT_TEST_CASE_2,
     TEST_CASE_3: OUTPUT_TEST_CASE_3,
     TEST_CASE_4: OUTPUT_TEST_CASE_4,
+    TEST_CASE_5: OUTPUT_TEST_CASE_5,
+    TEST_CASE_6: OUTPUT_TEST_CASE_6,
+    TEST_CASE_7: OUTPUT_TEST_CASE_7,
 }
