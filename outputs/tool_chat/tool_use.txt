@@ -1,0 +1,17 @@
+
+ --- Welcome --- 
+
+Stop Reason: tool_use
+Thinking: 
+Text: 
+Tool Use: [{'id': 'toolu_01Hyt4m7cpZaev6eVZnBKU55', 'name': 'get_report_status', 'input': {'pid': '5555'}}]
+Usage: tokens in=445 out=51 cost=$0.000070 
+
+Stop Reason: end_turn
+Thinking: 
+Text: The report for PID 5555 isn't ready yet; it's pending and is expected tomorrow at 5 PM.
+Tool Use: []
+Usage: tokens in=516 out=39 cost=$0.000071 
+
+
+ --- Thank you --- 
