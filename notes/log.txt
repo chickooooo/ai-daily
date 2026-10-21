@@ -14,3 +14,4 @@ Task 13: Make eval return a score instead of pass/fail.
 Task 14: Test eval suite on different configurations.
 Task 15: Update pydantic schema and test with full eval suite.
 Task 16: Simple tool use
+Task 17: Multi-turn chat with tool call
